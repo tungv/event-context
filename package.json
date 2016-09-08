@@ -1,0 +1,35 @@
+{
+  "name": "event-context",
+  "version": "0.0.1",
+  "description": "Universal Event context for JavaScript",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^3.5.0",
+    "lodash": "^4.15.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungv/event-context.git"
+  },
+  "keywords": [
+    "event",
+    "context",
+    "domain",
+    "universal"
+  ],
+  "author": "Tung Vu <me@tungv.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tungv/event-context/issues"
+  },
+  "homepage": "https://github.com/tungv/event-context#readme"
+}

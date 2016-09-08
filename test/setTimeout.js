@@ -1,4 +1,4 @@
-const { createContext } = require('../src/index');
+const { createContext } = require('../src/context');
 const { patch, unpatch } = require('../src/patches/setTimeout');
 const { expect } = require('chai');
 const { once } = require('lodash');

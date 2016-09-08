@@ -1,6 +1,10 @@
-const { getCurrentContext, setCurrentContext, revertContext } = require('./context');
+const { getCurrentContext, setCurrentContext, revertContext } = require('../context');
 
 const nativeSetTimeout = global.setTimeout;
+
+const unpatch = () => {
+  global.setTimeout = nativeSetTimeout;
+};
 
 const patchSetTimeout = () => {
   global.setTimeout = (fn, ms, ...params) => {
@@ -9,11 +13,10 @@ const patchSetTimeout = () => {
       return nativeSetTimeout(fn, ms, ...params);
     }
 
-    const parentContext = currentContext;
     currentContext.label && console.log('> setTimeout', currentContext.label);
     const computation = () => {
-      parentContext.label && console.log('> setTimeout.computation', parentContext.label);
-      setCurrentContext(parentContext);
+      currentContext.label && console.log('> setTimeout.computation', currentContext.label);
+      setCurrentContext(currentContext);
       fn(...params);
       revertContext();
     }
@@ -21,6 +24,9 @@ const patchSetTimeout = () => {
     currentContext.disposables.push(() => clearTimeout(id));
     return id;
   }
+
+  return unpatch;
 }
 
-patchSetTimeout();
+exports.patch = patchSetTimeout;
+exports.unpatch = unpatch;

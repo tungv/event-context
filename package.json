@@ -2,7 +2,8 @@
   "name": "event-context",
   "version": "0.1.0",
   "description": "Universal Event context for JavaScript",
-  "main": "src/index.js",
+  "main": "index.js",
+  "jsnext:main": "index.es.js",
   "directories": {
     "test": "test"
   },
@@ -22,7 +23,9 @@
     "rollup-watch": "^2.5.0"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run build:core && npm run build:jquery",
+    "build:core": "rollup -c && cp {README.md,package.json} build/core/",
+    "build:jquery": "BUILD_PLUGIN=jquery rollup -c && sed 's/\"event-context\"/\"event-context-plugin-jquery\"/g' package.json > build/plugins-jquery/package.json",
     "test": "rollup -c rollup.test.config.js && mocha _test"
   },
   "repository": {

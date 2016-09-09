@@ -1,6 +1,6 @@
 {
   "name": "event-context",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Universal Event context for JavaScript",
   "main": "src/index.js",
   "directories": {

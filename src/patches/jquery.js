@@ -1,4 +1,4 @@
-import { getCurrentContext, setCurrentContext, revertContext } from '../context';
+import { getCurrentContext, setCurrentContext, revertContext } from 'event-context/context';
 
 export const patch = $ => {
   const $add = $.event.add;

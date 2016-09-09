@@ -1,4 +1,4 @@
 export * from './context';
-import { patch } from './patches/setTimeout';
+import { patch } from './natives';
 
 patch();

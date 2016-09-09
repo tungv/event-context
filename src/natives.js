@@ -1,4 +1,4 @@
-import { getCurrentContext, setCurrentContext, revertContext } from '../context';
+import { getCurrentContext, setCurrentContext, revertContext } from './context';
 
 const nativeSetTimeout = global.setTimeout;
 const nativeSetInterval = global.setInterval;
@@ -14,7 +14,6 @@ export const unpatch = () => {
 };
 
 export const patch = () => {
-  console.log('test');
   const methods = ['Timeout', 'Interval'];
 
   methods.forEach(method =>

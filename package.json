@@ -26,7 +26,9 @@
     "build": "npm run build:core && npm run build:jquery",
     "build:core": "rollup -c && cp {README.md,package.json} build/core/",
     "build:jquery": "BUILD_PLUGIN=jquery rollup -c && sed 's/\"event-context\"/\"event-context-plugin-jquery\"/g' package.json > build/plugins-jquery/package.json",
-    "test": "rollup -c rollup.test.config.js && mocha _test"
+    "test": "rollup -c rollup.test.config.js && mocha _test",
+    "prerelease": "npm version minor && npm run build",
+    "release": "cd build/core && npm publish && cd ../plugins-jquery && npm publish"
   },
   "repository": {
     "type": "git",

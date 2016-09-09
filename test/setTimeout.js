@@ -1,7 +1,7 @@
-const { createContext } = require('../src/context');
-const { patch, unpatch } = require('../src/patches/setTimeout');
-const { expect } = require('chai');
-const { once } = require('lodash');
+import { createContext } from '../src/context';
+import { patch, unpatch } from '../src/patches/setTimeout';
+import { expect } from 'chai';
+import { once } from 'lodash';
 
 const nativeSetTimeout = global.setTimeout;
 

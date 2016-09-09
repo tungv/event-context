@@ -1,6 +1,4 @@
-const context = require('./context');
-const patchSetTimeout = require('./patches/setTimeout');
+export * from './context';
+import { patch } from './patches/setTimeout';
 
-patchSetTimeout.patch();
-
-module.exports = context;
+patch();

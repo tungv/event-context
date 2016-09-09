@@ -1,2 +1,0 @@
-require('./setTimeout');
-require('./setInterval');

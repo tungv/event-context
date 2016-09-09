@@ -1,16 +1,16 @@
 let prevContext = null;
 let currentContext = null;
 
-const getCurrentContext = () => currentContext;
-const setCurrentContext = ctx => {
+export const getCurrentContext = () => currentContext;
+export const setCurrentContext = ctx => {
   prevContext = currentContext;
   currentContext = ctx;
 }
-const revertContext = () => {
+export const revertContext = () => {
   currentContext = prevContext;
 }
 
-const createContext = (label) => {
+export const createContext = (label) => {
   const ctx = {
     label,
     disposables: [],
@@ -24,9 +24,7 @@ const createContext = (label) => {
   }
 
   const dispose = () => {
-    for(let disposeFn of ctx.disposables) {
-      disposeFn();
-    }
+    ctx.disposables.forEach(fn => fn());
   }
 
   Object.assign(ctx, {
@@ -36,8 +34,3 @@ const createContext = (label) => {
 
   return ctx;
 }
-
-exports.createContext = createContext;
-exports.getCurrentContext = getCurrentContext;
-exports.setCurrentContext = setCurrentContext;
-exports.revertContext = revertContext;

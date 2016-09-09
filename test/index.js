@@ -1,1 +1,2 @@
 require('./setTimeout');
+require('./setInterval');

@@ -69,7 +69,8 @@ $(function () {
 
 ## Roadmap
 
-- [ ] support node's `nextTick`
+- [x] support node's `nextTick`
+- [x] support node's `events`
 - [ ] add contextStorage so you can save values to an event context and pass it to downstream functions (think of React's context)
 - [ ] add child contexts (contexts that are created inside another context)
 - [ ] add existing event emitters to a context

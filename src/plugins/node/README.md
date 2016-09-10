@@ -21,6 +21,10 @@ npm i -S event-context event-context-plugin-node
 
 ### Passing data across functions without declaring them each time.
 
+This is super useful to getting the request that causing an unexpected error.
+See the example below, it was not easy to get the req inside a downstream function
+without explicitly passing the req along the way.
+
 ```js
 import { withContext, getCurrentContext } from 'event-context';
 import { patch } from 'event-context-plugin-node';
@@ -32,8 +36,7 @@ const server = http.createServer(withContext((req, res) => {
   const ctx = getCurrentContext();
   const state = ctx.getState();
 
-  state.theMeaningOfLife = 42;
-  state.method = req.method;
+  state.req = req;
 
   handleRequest(req.path, (err, value) => {
     res.end(value);
@@ -48,14 +51,14 @@ function handleRequest(path, callback) {
 }
 
 function callDB(callback) {
-  // now assume you need the meaning of life and req method
-  // you don't need to pass those values to handleRequest and then to callDB
-  // just take it from the currentContext
-  const ctx = currentContext();
-  const { theMeaningOfLife, method } = ctx.getState();
-  console.log(theMeaningOfLife); // log 42
-  console.log(method); // log the method that called the handleRequest that called this callDB
-  callback();
+  try {
+    somethingWrong();
+  } catch (ex) {
+    const ctx = currentContext();
+    const { req } = ctx.getState();
+    const { method, url } = req;
+    console.error('Server Error. Gracefully dying. Request causing error: ', method, url);
+  }
 }
 
 ```

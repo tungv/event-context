@@ -10,6 +10,7 @@ Related events now can share a contextual storage via `ctx.getState()`
 
 # Plugins
 EventContext for jQuery https://www.npmjs.com/package/event-context-plugin-jquery
+
 EventContext for NodeJS https://www.npmjs.com/package/event-context-plugin-node
 
 ## Installation:
@@ -65,7 +66,7 @@ function callDB(callback) {
 
 When you decide to stop all event listeners created in an context, just call `ctx.dispose()`
 
-```
+```js
 const ctx = getCurrentContext();
 ctx.dispose()
 ```

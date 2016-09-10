@@ -26,7 +26,7 @@ output:           ${DEST}
 
   pluginPackage.name = PLUGIN_PACKAGE_NAME;
   pluginPackage.version = CORE_VERSION;
-  pluginPackage.dependencies['event-context'] = `^${CORE_VERSION}`;
+  pluginPackage.peerDependencies['event-context'] = `^${CORE_VERSION}`;
   pluginPackage.description = `${PLUGIN_NAME} plugin for event-context (Universal event context library for JavaScript)`;
 
   const outputPackageJson = JSON.stringify(pluginPackage, null, 2);

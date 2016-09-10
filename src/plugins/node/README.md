@@ -64,7 +64,7 @@ function callDB(callback) {
 
 When you decide to stop all event listeners created in an context, just call `ctx.dispose()`
 
-```
+```js
 const ctx = getCurrentContext();
 ctx.dispose()
 ```

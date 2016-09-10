@@ -4,7 +4,7 @@
   "description": "$PLUGIN_NAME plugin for event-context (Universal event context library for JavaScript)",
   "main": "index.js",
   "jsnext:main": "index.es.js",
-  "dependencies": {
+  "peerDependencies": {
     "event-context": "^$CORE_VERSION"
   },
   "repository": {

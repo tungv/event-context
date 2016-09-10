@@ -26,6 +26,7 @@
     "build": "npm run build:core && npm run build:jquery",
     "build:core": "rollup -c && cp {README.md,package.json} build/core/",
     "build:jquery": "BUILD_PLUGIN=jquery rollup -c && sed 's/\"event-context\"/\"event-context-plugin-jquery\"/g' package.json > build/plugins-jquery/package.json && cp README.md build/plugins-jquery",
+    "build:node": "BUILD_PLUGIN=node rollup -c && sed 's/\"event-context\"/\"event-context-plugin-node\"/g' package.json > build/plugins-node/package.json && cp README.md build/plugins-node",
     "test": "rollup -c rollup.test.config.js && mocha _test",
     "prerelease": "npm run build",
     "release": "cd build/core && npm publish && cd ../plugins-jquery && npm publish",

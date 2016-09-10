@@ -34,3 +34,10 @@ export const createContext = (label) => {
 
   return ctx;
 }
+
+export const withContext = fn => function (...params) {
+  const ctx = createContext();
+  return ctx.run(() => {
+    fn.apply(this, params);
+  });
+}

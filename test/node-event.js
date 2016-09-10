@@ -122,13 +122,13 @@ describe('createContext', () => {
       const naiveFunction = (method, cb) => {
         setTimeout(() => {
           const ctx = getCurrentContext();
-          cb(`${method} ${ctx.someValue}`);
+          cb(`${method} ${ctx.getState().someValue}`);
         }, 10);
       }
 
       const requestHandler = withContext((req, res) => {
         const ctx = getCurrentContext();
-        ctx.someValue = '/echo';
+        ctx.getState().someValue = '/echo';
         naiveFunction(req.method, responsesSpy);
       })
 

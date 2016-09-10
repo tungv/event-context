@@ -13,6 +13,7 @@ export const revertContext = () => {
 export const createContext = (label) => {
   const ctx = {};
   const disposables = [];
+  const state = {};
 
   const run = (computation) => {
     prevContext = currentContext;
@@ -27,10 +28,13 @@ export const createContext = (label) => {
     disposables.forEach(fn => fn());
   }
 
+  const getState = () => state;
+
   // public API
   ctx.run = run;
   ctx.addDisposable = addDisposable;
   ctx.dispose = dispose;
+  ctx.getState = getState;
   return ctx;
 }
 

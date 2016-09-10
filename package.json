@@ -27,8 +27,8 @@
     "build:core": "rollup -c && cp {README.md,package.json} build/core/",
     "build:plugins": "node build_plugins",
     "test": "rollup -c rollup.test.config.js && mocha _test",
-    "prerelease": "npm run build",
-    "release": "cd build/core && npm publish && cd ../plugins-jquery && npm publish",
+    "prerelease": "npm run build jquery node",
+    "release": "cd build/core && npm publish && cd ../plugins-jquery && npm publish && cd ../plugins-node && npm publish",
     "postrelease": "rm -rf build"
   },
   "repository": {

@@ -3,7 +3,7 @@ import { once } from 'lodash';
 import jsdom from 'jsdom-global';
 
 import { createContext } from '../src/context';
-import { patch, unpatch } from '../src/plugins/jquery';
+import { patch, unpatch } from '../src/plugins/jquery/index';
 
 describe('createContext', () => {
   describe('patch jQuery', () => {

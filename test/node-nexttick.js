@@ -1,8 +1,8 @@
-import { createContext, getCurrentContext } from '../src/context';
-import * as native from '../src/natives';
-import { patch, unpatch } from '../src/plugins/node';
+import { patch, unpatch } from '../src/plugins/node/index';
 import { expect } from 'chai';
 import { once } from 'lodash';
+import { createContext, getCurrentContext } from '../src/context';
+import * as native from '../src/natives';
 
 const nativeSetTimeout = global.setTimeout;
 

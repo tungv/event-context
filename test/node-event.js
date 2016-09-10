@@ -6,7 +6,7 @@ import { spy } from 'sinon';
 
 import { withContext, createContext, getCurrentContext } from '../src/context';
 import * as native from '../src/natives';
-import { patch, unpatch } from '../src/plugins/node';
+import { patch, unpatch } from '../src/plugins/node/index';
 
 const nativeSetTimeout = global.setTimeout;
 

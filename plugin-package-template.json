@@ -1,0 +1,26 @@
+{
+  "name": "event-context-plugin-$PLUGIN_NAME",
+  "version": "$VERSION",
+  "description": "$PLUGIN_NAME plugin for event-context (Universal event context library for JavaScript)",
+  "main": "index.js",
+  "jsnext:main": "index.es.js",
+  "dependencies": {
+    "event-context": "^$CORE_VERSION"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungv/event-context.git"
+  },
+  "keywords": [
+    "event",
+    "context",
+    "domain",
+    "universal"
+  ],
+  "author": "Tung Vu <me@tungv.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tungv/event-context/issues"
+  },
+  "homepage": "https://github.com/tungv/event-context#readme"
+}

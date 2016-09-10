@@ -18,7 +18,7 @@ export const patch = $ => {
       revertContext();
     }
 
-    ctx.disposables.push(
+    ctx.addDisposable(
       () => {
         $remove(elem, types, computation, selector);
       }

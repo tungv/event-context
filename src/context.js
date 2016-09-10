@@ -11,10 +11,8 @@ export const revertContext = () => {
 }
 
 export const createContext = (label) => {
-  const ctx = {
-    label,
-    disposables: [],
-  }
+  const ctx = {};
+  const disposables = [];
 
   const run = (computation) => {
     prevContext = currentContext;
@@ -23,15 +21,16 @@ export const createContext = (label) => {
     currentContext = prevContext;
   }
 
+  const addDisposable = (disposable) => disposables.push(disposable);
+
   const dispose = () => {
-    ctx.disposables.forEach(fn => fn());
+    disposables.forEach(fn => fn());
   }
 
-  Object.assign(ctx, {
-    run,
-    dispose,
-  });
-
+  // public API
+  ctx.run = run;
+  ctx.addDisposable = addDisposable;
+  ctx.dispose = dispose;
   return ctx;
 }
 

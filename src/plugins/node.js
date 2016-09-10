@@ -52,7 +52,7 @@ export const patch = () => {
       computationMap.delete(handler);
     }
 
-    ctx.disposables.push(dispose);
+    ctx.addDisposable(dispose);
     return nativeAddFunction.call(this, type, computation);
   }
 

@@ -30,7 +30,7 @@ export const patch = () => {
       }
       const id = native[method](computation, ms);
       const dispose = () => global[`clear${method}`](id);
-      currentContext.disposables.push(dispose);
+      currentContext.addDisposable(dispose);
       return id;
     }
   );

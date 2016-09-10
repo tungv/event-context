@@ -23,9 +23,7 @@ export const patch = () => {
         return native[method](fn, ms, ...params);
       }
 
-      currentContext.label && console.log(`> set${method}`, currentContext.label);
       const computation = () => {
-        currentContext.label && console.log(`> set${method}.computation`, currentContext.label);
         setCurrentContext(currentContext);
         fn(...params);
         revertContext();

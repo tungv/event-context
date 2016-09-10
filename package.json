@@ -1,6 +1,6 @@
 {
   "name": "event-context",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "description": "Universal Event context for JavaScript",
   "main": "index.js",
   "jsnext:main": "index.es.js",

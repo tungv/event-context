@@ -1,76 +1,76 @@
 # event-context
-Event context for JS
 
+- Event context for JavaScript
+- Work in both NodeJS and browsers
+- No dependencies
+
+## The concept
 Group related events. Similar to nodejs's domain module.
+Related events now can share a contextual storage via `ctx.getState()`
+
+# Plugins
+EventContext for jQuery https://www.npmjs.com/package/event-context-plugin-jquery
+EventContext for NodeJS https://www.npmjs.com/package/event-context-plugin-node
 
 ## Installation:
-```
-npm i -S event-context
+
+```bash
+npm i -S event-context event-context-plugin-node
 ```
 
-## Usage
+## Usages
+
+### Passing data across functions without declaring them each time.
 
 ```js
-import { createContext } from 'event-context';
+import { withContext, getCurrentContext } from 'event-context';
+import { patch } from 'event-context-plugins-node';
 
-const ctx = createContext();
-
-ctx.run(() => {
-  // run sync code
-  doSthing();
-
-  // run async code
-  setTimeout(() => {
-    doSthInFuture();
-  }, 1000);
-});
-
-// at a later point in the app
-// you can safely unbind timers created in this ctx
-// every pending timers will not run
-ctx.dispose();
-```
-
-## Plugins
-
-`event-context` makes it easy to write plugins. Look at `src/plugins/jquery.js` for example.
-
-To install plugins:
-
-```
-npm i -S event-context-plugin-jquery
-```
-
-and patch jquery before any binding. Upcoming versions will let you add existing events to a context
-
-```js
-import { createContext } from 'event-context';
-import { patch } from 'event-context-plugins-jquery';
-
+// patch all NodeJS binding after this call
 patch();
 
-$(function () {
-  // ... some code
-  const ctx = createContext();
-  ctx.run(() => {
-    $('#awesome-button').click(function () {
-      doSth();
-    });
+const server = http.createServer(withContext((req, res) => {
+  const ctx = getCurrentContext();
+  const state = ctx.getState();
+
+  state.theMeaningOfLife = 42;
+  state.method = req.method;
+
+  handleRequest(req.path, (err, value) => {
+    res.end(value);
   });
+}));
 
-  // later in your code
-  ctx.dispose();
+function handleRequest(path, callback) {
+  // do some works with path
+  process.nextTick(() => {
+    callDB(callback);
+  });
+}
 
-  // all bound event handlers will stop running.
-  // events are removed from it DOM node.
-});
+function callDB(callback) {
+  // now assume you need the meaning of life and req method
+  // you don't need to pass those values to handleRequest and then to callDB
+  // just take it from the currentContext
+  const ctx = currentContext();
+  const { theMeaningOfLife, method } = ctx.getState();
+  console.log(theMeaningOfLife); // log 42
+  console.log(method); // log the method that called the handleRequest that called this callDB
+  callback();
+}
 
 ```
 
-## Roadmap
+### Auto unbinding
 
-- [x] support node's `nextTick`
-- [x] support node's `events`
-- [ ] add contextStorage so you can save values to an event context and pass it to downstream functions (think of React's context)
-- [ ] add child contexts (contexts that are created inside another context)
-- [ ] add existing event emitters to a context
+When you decide to stop all event listeners created in an context, just call `ctx.dispose()`
+
+```
+const ctx = getCurrentContext();
+ctx.dispose()
+```
+
+All bound event handlers within the context will be removed.
+
+## Contributions
+All contributions are super welcome

@@ -23,7 +23,7 @@ npm i -S event-context event-context-plugin-node
 
 ```js
 import { withContext, getCurrentContext } from 'event-context';
-import { patch } from 'event-context-plugins-node';
+import { patch } from 'event-context-plugin-node';
 
 // patch all NodeJS binding after this call
 patch();

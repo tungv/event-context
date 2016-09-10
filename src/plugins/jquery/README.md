@@ -23,7 +23,7 @@ npm i -S event-context event-context-plugin-jquery
 
 ```js
 import { createContext, getCurrentContext } from 'event-context';
-import { patch } from 'event-context-plugins-jquery';
+import { patch } from 'event-context-plugin-jquery';
 
 // patch all jQuery binding after this call
 patch();

@@ -80,7 +80,7 @@ describe('getState', () => {
         expect(state.shared).equal('childOverwrite');
         expect(state.parentOnly).equal('parentOnly');
         done();
-      });
+      }, 10);
 
       const parentComputaion = () => setTimeout(() => {
         // parent
@@ -88,7 +88,7 @@ describe('getState', () => {
           // child
           childComputation()
         })
-      })
+      }, 10)
 
       parent.run(() => {
         // parent

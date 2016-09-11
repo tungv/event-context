@@ -4,19 +4,23 @@
 - Work in both NodeJS and browsers
 - No dependencies
 
-## The concept
-Group related events. Similar to nodejs's domain module.
-Related events now can share a contextual storage via `ctx.getState()`
+## Features
+
+1. automatic state passing to downstream functions without explicitly declaring them in functions' parameters (think of [React's context](https://facebook.github.io/react/docs/context.html) but with inheritance). State values are accessible everywhere with `ctx.getState()`
+2. automatic disposal for every pending tasks and event listeners to prevent memory leaks. EventContext works with Promise as well, so you can abort nested unresolved promises with ease. Context disposal is accessible everywhere with `ctx.dispose()`
 
 # Plugins
-EventContext for jQuery https://www.npmjs.com/package/event-context-plugin-jquery
+EventContext for jQuery (jQuery events) https://www.npmjs.com/package/event-context-plugin-jquery
 
-EventContext for NodeJS https://www.npmjs.com/package/event-context-plugin-node
+EventContext for NodeJS (nextTick, EventEmitter) https://www.npmjs.com/package/event-context-plugin-node
 
 ## Installation:
 
 ```bash
-npm i -S event-context event-context-plugin-node
+npm i -S event-context
+
+# to use it with a plugin, just add the plugin package
+npm i -S event-context-plugin-node
 ```
 
 ## Usages
@@ -62,6 +66,50 @@ function callDB(callback) {
     console.error('Server Error. Gracefully dying. Request causing error: ', method, url);
   }
 }
+
+```
+
+### State inheritance
+
+State values are prototypically inherited (think of angular1's `scope`).
+
+```js
+
+// initiate contexts
+const parent = createContext('parent');
+const child = createContext('child');
+
+const pState = parent.getState();
+const cState = child.getState();
+
+// state can be set even before running.
+pState.parentOnly = 'parentOnly';
+pState.shared = 'parentShared';
+
+cState.childOnly = 'childOnly';
+cState.shared = 'childOverwrite';
+
+const childComputation = () => setTimeout(() => {
+  // child
+  const state = getCurrentContext().getState();
+  expect(state.childOnly).equal('childOnly');
+  expect(state.parentOnly).equal('parentOnly');
+  expect(state.shared).equal('childOverwrite');
+  done();
+}, 10);
+
+const parentComputaion = () => setTimeout(() => {
+  // parent
+  child.run(() => {
+    // child
+    childComputation()
+  })
+}, 10)
+
+parent.run(() => {
+  // parent
+  parentComputaion();
+});
 
 ```
 

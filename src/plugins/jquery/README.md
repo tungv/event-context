@@ -4,9 +4,10 @@
 - Work in both NodeJS and browsers
 - No dependencies
 
-## The concept
-Group related events. Similar to nodejs's domain module.
-Related events now can share a contextual storage via `ctx.getState()`
+## Features
+
+1. automatic state passing to downstream functions without explicitly declaring them in functions' parameters (think of [React's context](https://facebook.github.io/react/docs/context.html) but with inheritance). State values are accessible everywhere with `ctx.getState()`
+2. automatic disposal for every pending tasks and event listeners to prevent memory leaks. EventContext works with Promise as well, so you can abort nested unresolved promises with ease. Context disposal is accessible everywhere with `ctx.dispose()`
 
 # event-context-plugin-jquery
 Make EventContext package aware of jQuery bindings

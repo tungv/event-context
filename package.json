@@ -20,14 +20,15 @@
     "rollup-plugin-buble": "^0.13.0",
     "rollup-plugin-multi-entry": "^2.0.1",
     "rollup-plugin-strip": "^1.1.1",
-    "rollup-watch": "^2.5.0"
+    "rollup-watch": "^2.5.0",
+    "source-map-support": "^0.4.2"
   },
   "scripts": {
     "build": "npm run build:core && npm run build:plugins",
     "build:core": "rollup -c && cp {README.md,package.json} build/core/",
     "build:plugins": "node build_plugins",
-    "test": "rollup -c rollup.test.config.js && mocha _test -R progress",
-    "test:watch": "chokidar '{src,test}/**/*.js' -c 'npm test'",
+    "test": "rollup -c rollup.test.config.js --sourcemap && mocha _test -R progress --require source-map-support/register",
+    "test:watch": "npm test || true && chokidar '{src,test}/**/*.js' -c 'npm test'",
     "prerelease": "npm run build jquery node",
     "release": "cd build/core && npm publish && cd ../plugins-jquery && npm publish && cd ../plugins-node && npm publish",
     "postrelease": "rm -rf build"

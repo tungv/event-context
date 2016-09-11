@@ -13,28 +13,33 @@ export const revertContext = () => {
 export const createContext = (label = 'anonymous') => {
   const ctx = {};
   const disposables = [];
-  const state = {};
+  let hasRun = false;
+  let state = {};
 
   const run = (computation) => {
+    if (hasRun) {
+      throw new Error('Each context can only run once');
+    }
+
+    hasRun = true;
     ctx.parent = currentContext;
+
+    // inherit states
+    if (ctx.parent) {
+      const parentState = Object.create(ctx.parent.getState());
+      state = Object.assign(parentState, state);
+    }
     currentContext = ctx;
+
     computation();
     currentContext = ctx.parent;
   }
 
-  const addDisposable = (disposable) => disposables.push(disposable);
-
-  const dispose = () => {
-    disposables.forEach(fn => fn());
-  }
-
-  const getState = () => state;
-
   // public API
   ctx.run = run;
-  ctx.addDisposable = addDisposable;
-  ctx.dispose = dispose;
-  ctx.getState = getState;
+  ctx.addDisposable = (disposable) => disposables.push(disposable);
+  ctx.dispose = () => disposables.forEach(fn => fn());
+  ctx.getState = () => state
   ctx.toString = () => `[Context ${label}]`;
   return ctx;
 }

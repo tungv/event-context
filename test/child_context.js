@@ -59,5 +59,41 @@ describe('getState', () => {
         });
       });
     });
+
+    it('should inherit data from parent\'s state', done => {
+      const parent = createContext('parent');
+      const child = createContext('child');
+
+      const pState = parent.getState();
+      const cState = child.getState();
+
+      pState.parentOnly = 'parentOnly';
+      pState.shared = 'parentShared';
+
+      cState.childOnly = 'childOnly';
+      cState.shared = 'childOverwrite';
+
+      const childComputation = () => setTimeout(() => {
+        // child
+        const state = getCurrentContext().getState();
+        expect(state.childOnly).equal('childOnly');
+        expect(state.shared).equal('childOverwrite');
+        expect(state.parentOnly).equal('parentOnly');
+        done();
+      });
+
+      const parentComputaion = () => setTimeout(() => {
+        // parent
+        child.run(() => {
+          // child
+          childComputation()
+        })
+      })
+
+      parent.run(() => {
+        // parent
+        parentComputaion();
+      })
+    })
   });
 });

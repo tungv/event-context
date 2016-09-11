@@ -15,7 +15,7 @@ export default {
     multiEntry(),
     buble(),
     alias({
-      'event-context': path.resolve('./src/index.js'),
+      'event-context': path.resolve('./src/context.js'),
     }),
   ]
 };

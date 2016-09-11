@@ -10,16 +10,16 @@ export const revertContext = () => {
   currentContext = prevContext;
 }
 
-export const createContext = (label) => {
+export const createContext = (label = 'anonymous') => {
   const ctx = {};
   const disposables = [];
   const state = {};
 
   const run = (computation) => {
-    prevContext = currentContext;
+    ctx.parent = currentContext;
     currentContext = ctx;
     computation();
-    currentContext = prevContext;
+    currentContext = ctx.parent;
   }
 
   const addDisposable = (disposable) => disposables.push(disposable);
@@ -35,6 +35,7 @@ export const createContext = (label) => {
   ctx.addDisposable = addDisposable;
   ctx.dispose = dispose;
   ctx.getState = getState;
+  ctx.toString = () => `[Context ${label}]`;
   return ctx;
 }
 

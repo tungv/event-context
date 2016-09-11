@@ -1,4 +1,8 @@
 export * from './context';
-import { patch } from './natives';
+import { patch as patchNatives } from './natives';
+import { patch as patchPromise } from './promise';
 
-patch();
+patchNatives();
+if (typeof Promise !== 'undefined') {
+  patchPromise();
+}

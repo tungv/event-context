@@ -45,6 +45,10 @@ export const patch = () => {
       return ret;
     }
 
+    if (handler.listener) {
+      computation.listener = handler.listener;
+    }
+
     computationMap.set(handler, computation);
     listenerMap.set(computation, handler);
     const dispose = () => {

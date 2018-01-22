@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "jquery": "^2.0.0",
+    "jquery": "^3.0.0",
     "jsdom": "9.5.0",
     "jsdom-global": "2.1.0",
     "lodash": "^4.15.0",
